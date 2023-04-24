@@ -19,9 +19,12 @@ return new class extends Migration
             $table->string('ap_paterno',75);
             $table->string('ap_materno',75);
             $table->string('fecha_nacimiento',10);
-            $table->string('direccion',150);
+            $table->string('calle',150);
+            $table->string('numero_exterior',10);
             $table->string('colonia',75);
             $table->string('cp',10);
+            $table->string('ciudad',75);
+            $table->string('estado',75);
             $table->string('telefono',10);
             $table->double('capacidad',8,2);
             $table->string('credencial1',250);
