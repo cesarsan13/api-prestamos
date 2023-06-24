@@ -26,6 +26,23 @@ class Customer extends Model
         'credencial2',
         'baja',
     ];
+    protected $attributes = [
+        'nombres'=>'',
+        'ap_paterno'=>'',
+        'ap_materno'=>'',
+        'fecha_nacimiento'=>'',
+        'calle'=>'',
+        'numero_exterior'=>'',
+        'colonia'=>'',
+        'cp'=>'',
+        'ciudad'=>'',
+        'estado'=>'',
+        'telefono'=>'',
+        'capacidad'=>'',
+        'credencial1'=>'',
+        'credencial2'=>'',
+        'baja'=>'',
+    ];
     protected $table = 'customers';
     protected $primaryKey='id';
 }

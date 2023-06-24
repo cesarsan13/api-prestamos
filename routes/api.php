@@ -16,11 +16,13 @@ Use App\Http\Controllers\CustomerController;
 */
 Route::post('login',[AuthController::class,'login']);
 
+
 Route::middleware('auth:sanctum')->controller(AuthController::class)->group(function(){
     Route::delete('/logout/{id}','logout');
 });
 
 Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(function(){
-    Route::get('customer',[CustomerController::class,'index']);
+    // Route::get('customer',[CustomerController::class,'index']);
+    Route::post('/customer','store');
 });
-
+ 

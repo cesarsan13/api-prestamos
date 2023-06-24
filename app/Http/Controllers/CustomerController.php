@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\ObjectResponse;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -36,7 +37,34 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = ObjectResponse::DefaultResponse();
+        try{
+            $customer = Customer::create([
+
+                 'nombres'=>$request->nombres,
+                 'ap_paterno'=>$request->ap_paterno,
+                 'ap_materno'=>$request->ap_materno,
+                 'fecha_nacimiento'=>$request->fecha_nacimiento,
+                 'calle'=>$request->calle,
+                 'colonia'=>$request->colonia,
+                 'numero_exterior'=>$request->numero_exterior,
+                 'cp'=>$request->cp,
+                 'ciudad'=>$request->ciudad,
+                 'estado'=>$request->estado,
+                 'telefono'=>$request->telefono,
+                 'capacidad'=>$request->capacidad
+
+            ]);
+
+            $response = ObjectResponse::CorrectResponse();
+            data_set($response, 'message', 'peticion satisfactoria | receta registrada');
+            data_set($response, 'alert_text', 'receta registrada');
+
+        }catch(\Exception $ex){
+            $response = ObjectResponse::CatchResponse($ex->getMessage());
+
+        }
+        return response()->json($response, $response["status_code"]);
     }
 
     /**
