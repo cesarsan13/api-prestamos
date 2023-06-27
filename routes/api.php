@@ -24,5 +24,6 @@ Route::middleware('auth:sanctum')->controller(AuthController::class)->group(func
 Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(function(){
     // Route::get('customer',[CustomerController::class,'index']);
     Route::post('/customer','store');
+    Route::get("/customers","index");
 });
  

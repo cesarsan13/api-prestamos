@@ -15,8 +15,18 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::all();
-        return $customer;
+        $response = ObjectResponse::DefaultResponse();
+        try{
+            $customers = Customer::where('baja','')
+            ->select('customers.id','customers.nombres')
+            ->get();
+            $response = ObjectResponse::CorrectResponse();
+            data_set($response, 'message', 'Peticion satisfactoria. Lista de roles:');
+            data_set($response, 'data', $customers);
+        }catch(\Exception $ex){
+            $response  = ObjectResponse::CatchResponse($ex->getMessage());
+        }
+        return response()->json($response,$response["status_code"]);
     }
 
     /**
@@ -57,8 +67,8 @@ class CustomerController extends Controller
             ]);
 
             $response = ObjectResponse::CorrectResponse();
-            data_set($response, 'message', 'peticion satisfactoria | receta registrada');
-            data_set($response, 'alert_text', 'receta registrada');
+            data_set($response, 'message', 'peticion satisfactoria | Cliente Registrado');
+            data_set($response, 'alert_text', 'Cliente Registrado');
 
         }catch(\Exception $ex){
             $response = ObjectResponse::CatchResponse($ex->getMessage());
