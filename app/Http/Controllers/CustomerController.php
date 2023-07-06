@@ -17,14 +17,16 @@ class CustomerController extends Controller
     {
         $response = ObjectResponse::DefaultResponse();
         try{
-            $customers = Customer::where('baja','')
-            ->select('customers.id','customers.nombres')
-            ->get();
+            $customers = Customer::select('*')->where('baja','')
+            ->get()
+            ->makeHidden(['created_at', 'updated_at']);
             $response = ObjectResponse::CorrectResponse();
             data_set($response, 'message', 'Peticion satisfactoria. Lista de roles:');
             data_set($response, 'data', $customers);
         }catch(\Exception $ex){
             $response  = ObjectResponse::CatchResponse($ex->getMessage());
+           
+
         }
         return response()->json($response,$response["status_code"]);
     }
@@ -49,30 +51,23 @@ class CustomerController extends Controller
     {
         $response = ObjectResponse::DefaultResponse();
         try{
-            $customer = Customer::create([
 
-                 'nombres'=>$request->nombres,
-                 'ap_paterno'=>$request->ap_paterno,
-                 'ap_materno'=>$request->ap_materno,
-                 'fecha_nacimiento'=>$request->fecha_nacimiento,
-                 'calle'=>$request->calle,
-                 'colonia'=>$request->colonia,
-                 'numero_exterior'=>$request->numero_exterior,
-                 'cp'=>$request->cp,
-                 'ciudad'=>$request->ciudad,
-                 'estado'=>$request->estado,
-                 'telefono'=>$request->telefono,
-                 'capacidad'=>$request->capacidad
-
+            $validateData = $request->validate([
+                'nombres'=>'required',
+                'ap_paterno'=>'required',
+                'ap_materno'=>'required',
+                'fecha_nacimiento'=>'required',
             ]);
-
+           
+             $customer = Customer::create($validateData);
             $response = ObjectResponse::CorrectResponse();
             data_set($response, 'message', 'peticion satisfactoria | Cliente Registrado');
             data_set($response, 'alert_text', 'Cliente Registrado');
 
         }catch(\Exception $ex){
             $response = ObjectResponse::CatchResponse($ex->getMessage());
-
+            data_set($response, 'message', 'Peticion fallida | Registro de cliente');
+            data_set($response, 'data', $ex);
         }
         return response()->json($response, $response["status_code"]);
     }
@@ -108,7 +103,35 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+        $response = ObjectResponse::DefaultResponse();
+        try {
+            $validateData = $request->validate([
+                'nombres'=>'required',
+                'ap_paterno'=>'required',
+                'ap_materno'=>'required',
+                'fecha_nacimiento'=>'required',
+                // 'baja'=>'required',
+
+            ]);
+
+
+            $cliente = Customer::where('id',$request->id)
+            ->update($validateData);
+            $response = ObjectResponse::CorrectResponse();
+            data_set($response,'message','peticion satisfactoria | Cliente actualizado.');
+            data_set($response,'alert_text','Cliente actualizado');
+
+            //code...
+        } catch (\Exception $ex) {
+            //throw $th;
+            $response = ObjectResponse::CatchResponse($ex->getMessage());
+            data_set($response, 'message', 'Peticion fallida | Registro de cliente');
+            data_set($response, 'data', $ex);
+
+        }
         //
+        return response()->json($response,$response["status_code"]);
+
     }
 
     /**
@@ -117,8 +140,29 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+            public function destroy(Request $request)
     {
+        $response = ObjectResponse::DefaultResponse();
+        try {
+            $validateData = $request->validate([
+                'baja'=>'required',
+            ]);
+            $cliente = Customer::where('id',$request->id)
+            ->update(['baja'=>'*',]);
+            $response = ObjectResponse::CorrectResponse();
+            data_set($response,'message','peticion satisfactoria | Cliente Eliminad.');
+            data_set($response,'alert_text','Cliente Eliminado satifactoriamente.');
+
+            //code...
+        } catch (\Exception $ex) {
+            //throw $th;
+            $response = ObjectResponse::CatchResponse($ex->getMessage());
+            data_set($response, 'message', 'Peticion fallida | ACtualizacion de cliente');
+            data_set($response, 'data', $ex);
+
+        }
+        //
+        return response()->json($response,$response["status_code"]);
         //
     }
 }

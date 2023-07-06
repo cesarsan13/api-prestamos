@@ -14,9 +14,10 @@ Use App\Http\Controllers\CustomerController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Route::post('login',[AuthController::class,'login']);
+
 Route::post('login',[AuthController::class,'login']);
-
-
 Route::middleware('auth:sanctum')->controller(AuthController::class)->group(function(){
     Route::delete('/logout/{id}','logout');
 });
@@ -24,6 +25,8 @@ Route::middleware('auth:sanctum')->controller(AuthController::class)->group(func
 Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(function(){
     // Route::get('customer',[CustomerController::class,'index']);
     Route::post('/customer','store');
+    Route::post('/customer/update','update');
+    Route::post('/customer/baja','destroy');
     Route::get("/customers","index");
 });
  

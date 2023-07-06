@@ -15,21 +15,21 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres',100);
-            $table->string('ap_paterno',75);
-            $table->string('ap_materno',75);
-            $table->string('fecha_nacimiento',10);
-            $table->string('calle',150);
-            $table->string('numero_exterior',10);
-            $table->string('colonia',75);
-            $table->string('cp',10);
-            $table->string('ciudad',75);
-            $table->string('estado',75);
-            $table->string('telefono',10);
-            $table->double('capacidad',8,2);
-            $table->string('credencial1',250);
-            $table->string('credencial2',250);
-            $table->string('baja',1);
+            $table->string('nombres',100)->nullable()->default('');
+            $table->string('ap_paterno',75)->nullable()->default('');
+            $table->string('ap_materno',75)->nullable()->default('');
+            $table->string('fecha_nacimiento',10)->nullable()->default('');
+            $table->string('calle',150)->nullable()->default('');
+            $table->string('numero_exterior',10)->nullable()->default('');
+            $table->string('colonia',75)->nullable()->default('');
+            $table->string('cp',10)->nullable()->default('');
+            $table->string('ciudad',75)->nullable()->default('');
+            $table->string('estado',75)->nullable()->default('');
+            $table->string('telefono',10)->nullable()->default('');
+            $table->double('capacidad',8,2)->nullable()->default(0);
+            $table->string('credencial1',250)->nullable()->default('');
+            $table->string('credencial2',250)->nullable()->default('');
+            $table->string('baja',1)->nullable()->default('');
             $table->timestamps();
         });
     }
