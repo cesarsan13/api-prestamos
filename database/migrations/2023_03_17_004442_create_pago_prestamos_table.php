@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string("fecha_pago",10);
             $table->string("hora_pago",10);
             $table->double("monto",8,2);
-            $table->string("ticket_transferencia",250);
             $table->timestamps();
         });
     }
