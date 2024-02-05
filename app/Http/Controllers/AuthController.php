@@ -19,7 +19,7 @@ class AuthController extends Controller
         ]);
         $user = User::where('username', $request->username)->first();
         if(!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message'=>['Credenciales incorrectas'],
+         return response()->json(['message'=>['Credenciales incorrectas'],
             'alert_title.'=>['Credenciales incorrectas'],
             'alert_text'=>['Credenciales incorrectas'],], 401);
         }
@@ -72,15 +72,11 @@ class AuthController extends Controller
         $response = ObjectResponse::DefaultResponse();
         try {
             $token = $request->bearerToken();
-        
+            
             $new_user = User::create([
-                'name' => $request->name,
-                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-                'role_id' => $request->role_id,
             ]);
             $response = ObjectResponse::CorrectResponse();
             data_set($response,'message','peticion satisfactoria | usuario registrado.');

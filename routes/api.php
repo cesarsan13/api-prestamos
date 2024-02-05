@@ -16,8 +16,11 @@ Use App\Http\Controllers\CustomerController;
 */
 
 // Route::post('login',[AuthController::class,'login']);
-
+Route::get('/some', function () {
+    return  response()->json('hola mundo mundial');
+});
 Route::post('login',[AuthController::class,'login']);
+Route::post('store',[AuthController::class,'store']);
 Route::middleware('auth:sanctum')->controller(AuthController::class)->group(function(){
     Route::delete('/logout/{id}','logout');
 });
