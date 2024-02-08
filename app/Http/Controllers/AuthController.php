@@ -71,15 +71,11 @@ class AuthController extends Controller
         $response = ObjectResponse::DefaultResponse();
         try {
             $token = $request->bearerToken();
-        
+            
             $new_user = User::create([
-                'name' => $request->name,
-                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-                'role_id' => $request->role_id,
             ]);
             $response = ObjectResponse::CorrectResponse();
             data_set($response,'message','peticion satisfactoria | usuario registrado.');
