@@ -19,9 +19,8 @@ class AuthController extends Controller
         ]);
         $user = User::where('username', $request->username)->first();
         if(!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message'=>['Credenciales incorrectas'],
-            'alert_title.'=>['Credenciales incorrectas'],
-            'alert_text'=>['Credenciales incorrectas'],], 401);
+            $response = ObjectResponse::CatchResponse("Credenciales Incorrectas.");
+            return response()->json($response,401);
         }
         $token = $user->createToken($request->username, ['user'])->plainTextToken;
         $response = ObjectResponse::CorrectResponse();

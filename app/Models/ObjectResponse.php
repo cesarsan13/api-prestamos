@@ -34,12 +34,12 @@ class ObjectResponse extends Model
     }
 
     public static function CatchResponse($message) {
-        $message ?? "Ocurrio un error, verifica tus datos.";
+        
 
         $response = [
             "status_code" => 400,
             "status" => false,
-            "message" => $message,
+            "message" => $message ?? "Ocurrio un error, verifica tus datos.",
             "alert_icon" => "error",
             "alert_title" => "Oppss!",
             "alert_text" => "Algo salio mal, verifica tus datos.",
